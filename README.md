@@ -1,2 +1,1 @@
-# python_project-template
-Template
+# Python_section
