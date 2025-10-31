@@ -1,7 +1,7 @@
 from decimal import Decimal
 
-from money import Money, Wallet
 from currency import rub, usd
+from money import Money, Wallet
 
 
 def main():
@@ -17,5 +17,5 @@ def main():
     print(wallet[rub])
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
