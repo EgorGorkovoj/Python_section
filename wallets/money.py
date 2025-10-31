@@ -3,7 +3,7 @@ from decimal import Decimal
 from typing import Dict, Self
 
 from currency import Currency
-from exceptions import SameValueException, NegativeValueException
+from exceptions import NegativeValueException, SameValueException
 
 
 @dataclass(frozen=True, slots=True)
@@ -20,7 +20,7 @@ class Money:
 
     def check_current_currency(self, other):
         if not self.currency == other.currency:
-            raise SameValueException('Валюта должна быть одинаковой!')
+            raise SameValueException("Валюта должна быть одинаковой!")
 
     def negative_value(self):
         return self.value < 0
@@ -33,12 +33,14 @@ class Wallet:
         self.add(money)
 
     def __getitem__(self, item: Currency):
-        return self.__balance.setdefault(item, Money(value=Decimal(0), currency=item))
+        return self.__balance.setdefault(
+            item, Money(value=Decimal(0), currency=item)
+        )
 
     def __setitem__(self, key: Currency, value: Money):
         if key != value.currency:
             raise SameValueException(
-                f'Ключ {key} и валюта {value.currency} не совпадают!'
+                f"Ключ {key} и валюта {value.currency} не совпадают!"
             )
         self.__balance[key] = value
 
@@ -63,6 +65,6 @@ class Wallet:
     def sub(self, money: Money) -> Self:
         new_balance = self[money.currency] - money
         if new_balance.negative_value():
-            raise NegativeValueException('Недостачно средст для списания!')
+            raise NegativeValueException("Недостачно средст для списания!")
         self[money.currency] = new_balance
         return self
